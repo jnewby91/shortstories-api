@@ -2,10 +2,21 @@
   "name": "shortstories-api",
   "version": "1.0.0",
   "description": "'Database for Short Stories'",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.11"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
+    "ev": "0.0.7",
+    "mocha": "^5.2.0"
+  }
 }
