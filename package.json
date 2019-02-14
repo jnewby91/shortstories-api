@@ -4,7 +4,8 @@
   "description": "'Database for Short Stories'",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --exit",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -18,5 +19,16 @@
     "chai-http": "^4.2.1",
     "ev": "0.0.7",
     "mocha": "^5.2.0"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jnewby91/shortstories-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jnewby91/shortstories-api/issues"
+  },
+  "homepage": "https://github.com/jnewby91/shortstories-api#readme"
 }
