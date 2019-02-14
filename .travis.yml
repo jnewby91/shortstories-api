@@ -1,0 +1,11 @@
+language: node_js
+node_js: node
+services:
+- mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: 1j0zqIFlOYz8CVnswbzg7X8LZrv0D2o+OcgLuOuU5uSk9CQACfhG6mJLsZKbsTaj/KkyNLRfv2lRfVses7SnH1mRtX++LasmTGKapbnUQqW0DpvIZkTK2JYtzkD74AbEKZ4SZ55s2Kqo8/OKrUdKhf/dZkvR0e1HPSDytrJhLDfEvg3jw6EPPaAGCHG3USL78t2FnwNFT68C2TKhioSzgyn+np8gxxI4m75NWHoN4Bc6v8uhSBpgrlb0FmYp1j7cGoW5hUuVqjIbA7tpMUI+l8o9fgQzKcuq1FEwcIvJVY5o/hYj9Uwbj9mKJTEkfQoU7mA7LmXkyE7c1Q02GVehkE1rXKUU8lA6wYxOLlAXJjbyuWJhPwA7CWweVSLbBfE2PggSvSSzzwQAqb9n+R1by9H4Ce7UuoPIdSS7uFdLJSZbYcl9woI7lcNCGweAGMRSjFRss+Qoa3jj8Vf4IfBEaDNSZNNidOf0ekBUklkb+8aaphP3bjxUTShlsyzwZnUVIC+ZwF3hyycDq2oOXz2b+OvkoJaGe+YlvkgTrUphGunOvlqqzBJhhRjn+derdjdxMtYrX5vMFFmyqb9+JEX4UGeITXR+e9kyGVHY27ADLjWLoTctVg7DPEnkjjZfypP/3T/RTkP0GGYrnGxhBY3jd1SkI7D4BBSAAXyb11NmCBo=
+  app: shortstories-api
+  on:
+    repo: jnewby91/shortstories-api
