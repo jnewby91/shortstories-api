@@ -12,6 +12,8 @@ const usersRouter = require('./routes/usersRouter');
 const storiesRouter = require('./routes/storiesRouter');
 const promptsRouter = require('./routes/promptsRouter');
 
+app.use(bodyParser.json());
+
 app.use('/prompts', promptsRouter);
 app.use('/stories', storiesRouter);
 app.use('/users', usersRouter);

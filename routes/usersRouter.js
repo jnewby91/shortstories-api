@@ -33,7 +33,18 @@ router.get('/', (req, res) => {
     });
 });
 
-
+//GET endpoint that a single user in the database
+router.get('/:id', (req,res) => {
+    User
+    .findById(req.params.id)
+        .then(user => res.json(users.serialize()))
+        .catch(err => {
+            console.error(err); 
+            res.status(500).json({
+                error: 'something went wrong'
+            });
+        })
+    });
 
 //POST endpoint to create users in Sign-up 
 
@@ -57,6 +68,7 @@ router.post('/', (req, res) => {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             userName: req.body.userName,
+            tagline: req.body.tagline,
             email: req.body.email,
             password: password   
         })
@@ -69,6 +81,15 @@ router.post('/', (req, res) => {
         });
     })
 });
+
+//DELETE ENDPOINT FOR USERS
+router.delete('/:id', (req,res) => {
+    User
+    .findByIdAndDelete(req.params.id)
+    .then(() => {
+        res.status(204).end(); 
+    })
+})
 
 
 module.exports = router; 

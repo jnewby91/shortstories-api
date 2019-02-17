@@ -1,7 +1,7 @@
 'use strict'; 
 
 const mongoose = require('mongoose');
-// const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 
 const userSchema = mongoose.Schema({
     firstName: 'string', 
@@ -25,7 +25,7 @@ const userSchema = mongoose.Schema({
 
 });
 
-const categorySchema = mongoose.Schema({category: 'string'});
+// const categorySchema = mongoose.Schema({category: 'string'});
 
 const promptSchema = mongoose.Schema({
     title: {
@@ -43,7 +43,10 @@ const promptSchema = mongoose.Schema({
     },
     
     //Could put a date on when this prompt was created 
-    category: [categorySchema]
+    category: {
+        type: 'string', 
+        required: true
+    }
 }); 
 
 // const commentSchema = mongoose.Schema({comments: 'string'});
@@ -51,6 +54,10 @@ const promptSchema = mongoose.Schema({
 const shortStorySchema = mongoose.Schema({
     title: {
         type: 'string',
+        required: true
+    },
+    story: {
+        type: 'string', 
         required: true
     },
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
@@ -62,6 +69,48 @@ const shortStorySchema = mongoose.Schema({
     // likes: Number, 
     
 })
+
+//Need to encrypt password being passed into the database
+userSchema.statics.hashPassword = (password) => {
+    return bcrypt.hash(password, 10);
+}
+
+//Retrieves the correct password from a hashed value 
+userSchema.methods.validatePassword = function(password){
+    return bcrypt.compare(password, this.password);
+}
+
+//The items I want returned when I use the user GET endpoint 
+userSchema.methods.serialize = () =>{
+    return {
+        id: this.id,
+        userName: this.userName,
+        email: this.email, 
+        tagline: this.tagline, 
+    }
+}
+
+//The items I want returned when I use the prompts GET endpoint 
+promptSchema.methods.serialize = () =>{
+    return {
+        id: this.id,
+        title: this.titile, 
+        story: this.story,
+        date: this.date 
+    }
+}
+
+//The items I want returned when I use the shortStories GET endpoint 
+shortStorySchema.methods.serialize = () =>{
+    return {
+        id: this.id,
+        title: this.titile, 
+        scenario: this.scenario,
+        category: this.category,
+        date: this.date
+    }
+}
+
 
 
 const Story = mongoose.model('Story', shortStorySchema); 
