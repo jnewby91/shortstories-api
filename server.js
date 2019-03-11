@@ -1,10 +1,13 @@
 const express = require('express');
 const app = express();
+const cors= require('cors'); 
 
 const mongoose = require('mongoose');
+
+const {DATABASE_URL, PORT, CLIENT_ORIGIN} = require('./config.js');
+
 mongoose.Promise = global.Promise;
 
-const {DATABASE_URL, PORT} = require('./config.js');
 const {Story, Prompt, User} = require('./models');
 const bodyParser = require('body-parser');
 
@@ -12,15 +15,26 @@ const usersRouter = require('./routes/usersRouter');
 const storiesRouter = require('./routes/storiesRouter');
 const promptsRouter = require('./routes/promptsRouter');
 
+
+
+
 app.use(bodyParser.json());
 
-app.use('/prompts', promptsRouter);
-app.use('/stories', storiesRouter);
-app.use('/users', usersRouter);
+app.use(
+    cors({
+        origin: CLIENT_ORIGIN
+    })
+);
 
- app.get('/api/*', (req, res) => {
-   res.json({ok: true});
- });
+app.use('/api/prompts', promptsRouter);
+app.use('/api/stories', storiesRouter);
+app.use('/api/users', usersRouter);
+
+
+
+//  app.get('/api/*', (req, res) => {
+//    res.json({ok: true});
+//  });
 
  let server;
 
