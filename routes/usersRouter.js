@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
+const bodyParser = require('body-parser'); 
+const jsonParser = bodyParser.json(); 
+
 const mongoose = require('mongoose'); 
 mongoose.Promise = global.Promise; 
 
-const {DATABASE_URL, PORT} = require('../config');
 const {User} = require('../models'); 
 
 //GET endpoint that returns all the users in the database
@@ -48,7 +50,7 @@ router.get('/:id', (req,res) => {
 
 //POST endpoint to create users in Sign-up 
 
-router.post('/', (req, res) => {
+router.post('/', jsonParser, (req, res) => {
     console.log(req.body);
     const requiredFields=['firstName','lastName', 'userName', 'email', 'password'];
     for(let i=0; i < requiredFields.length; i++){
@@ -92,4 +94,5 @@ router.delete('/:id', (req,res) => {
 })
 
 
-module.exports = router; 
+module.exports = router;  
+

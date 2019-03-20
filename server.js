@@ -1,24 +1,20 @@
+'use strict' ;
+
 const express = require('express');
 const app = express();
 const cors= require('cors'); 
+const morgan= require('morgan'); 
 
 const mongoose = require('mongoose');
 
 const {DATABASE_URL, PORT, CLIENT_ORIGIN} = require('./config.js');
 
-mongoose.Promise = global.Promise;
-
-const {Story, Prompt, User} = require('./models');
-const bodyParser = require('body-parser');
-
 const usersRouter = require('./routes/usersRouter');
 const storiesRouter = require('./routes/storiesRouter');
 const promptsRouter = require('./routes/promptsRouter');
 
+mongoose.Promise = global.Promise;
 
-
-
-app.use(bodyParser.json());
 
 app.use(
     cors({
@@ -26,10 +22,23 @@ app.use(
     })
 );
 
+app.use(morgan('tiny')); 
+app.use(express.json());
+
+app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE');
+    if(req.method === 'OPTIONS'){
+        return res.send(204);
+    }
+    next(); 
+})
+
+
 app.use('/api/prompts', promptsRouter);
 app.use('/api/stories', storiesRouter);
 app.use('/api/users', usersRouter);
-
 
 
 //  app.get('/api/*', (req, res) => {
