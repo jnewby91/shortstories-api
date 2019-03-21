@@ -15,7 +15,7 @@ const {DATABASE_URL, PORT, CLIENT_ORIGIN} = require('./config.js');
 const usersRouter = require('./routes/usersRouter');
 const storiesRouter = require('./routes/storiesRouter');
 const promptsRouter = require('./routes/promptsRouter');
-const authRouter = require('./auth/router'); 
+const {router: authRouter} = require('./auth/router'); 
 
 const {localStrategy, jwtStrategy} = require('./auth/strategies'); 
 
