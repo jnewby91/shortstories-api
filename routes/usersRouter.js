@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const passport = require('passport'); 
 const bodyParser = require('body-parser'); 
 const jsonParser = bodyParser.json(); 
 
@@ -8,6 +8,9 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise; 
 
 const {User} = require('../models'); 
+
+const jwtAuth = passport.authenticate('jwt', {session: false});
+
 
 //GET endpoint that returns all the users in the database
 
@@ -36,7 +39,7 @@ router.get('/', (req, res) => {
 });
 
 //GET endpoint that a single user in the database
-router.get('/:id', (req,res) => {
+router.get('/:id',jwtAuth, (req,res) => {
     User
     .findById(req.params.id)
         .then(user => res.json(users.serialize()))
@@ -85,7 +88,7 @@ router.post('/', jsonParser, (req, res) => {
 });
 
 //DELETE ENDPOINT FOR USERS
-router.delete('/:id', (req,res) => {
+router.delete('/:id', jwtAuth, (req,res) => {
     User
     .findByIdAndDelete(req.params.id)
     .then(() => {
