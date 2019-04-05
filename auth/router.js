@@ -9,9 +9,9 @@ const config =require('../config');
 const router= express.Router(); 
 
 
-const createAuthToken = function (user) {
-    return jwt.sign({user}, config.JWT_SECRET, {
-        subject: user.userName,
+const createAuthToken = function (email) {
+    return jwt.sign({email}, config.JWT_SECRET, {
+        subject: email,
         expiresIn: config.JWT_EXPIRY, 
         algorithm: 'HS256'
     });
@@ -20,10 +20,13 @@ const createAuthToken = function (user) {
 const localAuth = passport.authenticate('local', {session: false}); 
 router.use(bodyParser.json()); 
 
-router.post('/login', localAuth, (req,res) => {
-    const user = req.user; 
-    const authToken = createAuthToken(user); 
-    res.json({authToken, user}); 
+router.post('/login',  (req,res) => {
+    console.log('hello');
+    const email = req.body.email; 
+    console.log(email);
+    const authToken = createAuthToken(email); 
+    console.log(authToken);
+    res.json({authToken, email}); 
 }); 
 
 const jwtAuth =passport.authenticate('jwt', {session:false}); 
