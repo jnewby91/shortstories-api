@@ -20,13 +20,18 @@ const createAuthToken = function (email) {
 const localAuth = passport.authenticate('local', {session: false}); 
 router.use(bodyParser.json()); 
 
-router.post('/login',  (req,res) => {
+/**
+ * I probably need to pass in the user
+ * instead of just the email.
+ */
+
+router.post('/login', localAuth, (req,res) => {
     console.log('hello');
-    const email = req.body.email; 
-    console.log(email);
-    const authToken = createAuthToken(email); 
+    const user = req.body.user.serialize(); 
+    console.log(user);
+    const authToken = createAuthToken(user); 
     console.log(authToken);
-    res.json({authToken, email}); 
+    res.json({authToken, user}); 
 }); 
 
 const jwtAuth =passport.authenticate('jwt', {session:false}); 
