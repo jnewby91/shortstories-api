@@ -10,12 +10,12 @@ const { JWT_SECRET } = require('../config');
 // http://www.passportjs.org/docs/configure/
 
 // The LocalStrategy gets used while trying to access an Endpoint using a User + Password combination
-const localStrategy = new LocalStrategy((username, password, passportVerify) => {
-    console.log(username + password); 
+const localStrategy = new LocalStrategy({usernameField : 'email',passwordField : 'password'},(email, password, passportVerify) => {
+    console.log(email + password); 
     let user;
     // Step 1: Verify the username exists
 
-    User.findOne({ userName: username }).then(_user => {
+    User.findOne({ email: email }).then(_user => {
         user = _user;
         if (!user) {
             // Step 2A: If user is not found on the database, reject promise with an error.

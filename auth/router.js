@@ -9,9 +9,9 @@ const config =require('../config');
 const router= express.Router(); 
 
 
-const createAuthToken = function (email) {
-    return jwt.sign({email}, config.JWT_SECRET, {
-        subject: email,
+const createAuthToken = function (user) {
+    return jwt.sign({user}, config.JWT_SECRET, {
+        subject: user.email,
         expiresIn: config.JWT_EXPIRY, 
         algorithm: 'HS256'
     });
@@ -27,7 +27,7 @@ router.use(bodyParser.json());
 
 router.post('/login', localAuth, (req,res) => {
     console.log('hello');
-    const user = req.body.user.serialize(); 
+    const user = req.user 
     console.log(user);
     const authToken = createAuthToken(user); 
     console.log(authToken);
