@@ -65,7 +65,7 @@ router.post('/', jsonParser, (req, res) => {
     }
 
     User
-    .hashPassword(req.body.password)
+    .hashPassword(req.body.password)   
     .then(password => {
         return User
         .create({
