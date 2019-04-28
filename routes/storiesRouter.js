@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
-
+const passport = require('passport'); 
 const mongoose = require('mongoose'); 
 mongoose.Promise = global.Promise; 
 
 const {DATABASE_URL, PORT} = require('../config');
 const {Story} = require('../models'); 
+
+const jwtAuth = passport.authenticate('jwt', {session: false});
 
 //GET endpoint that returns all the stories in the database
 router.get('/', (req, res) => {
@@ -32,7 +34,7 @@ router.get('/', (req, res) => {
 });
 
 //POST endpoint that creates writing prompts 
-router.post('/', (req, res) => {
+router.post('/', jwtAuth, (req, res) => {
     console.log(req.body);
     const requiredFields=['title','story'];
     for(let i=0; i < requiredFields.length; i++){
@@ -48,7 +50,7 @@ router.post('/', (req, res) => {
         .create({
             title: req.body.title,
             story: req.body.story,
-            user: req.body.id
+            user: req.user.id
         })
         .then(story => res.status(201).json(story.serialize())
         )
