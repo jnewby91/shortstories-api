@@ -32,11 +32,7 @@ const promptSchema = mongoose.Schema({
         type:'string',
         required: true
     },
-    email: {
-        type: 'string',
-        unique: true, 
-        required: true, 
-    },
+    user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     scenario: {
         type:'string',
         required: true

@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
-
+const passport = require('passport'); 
 const mongoose = require('mongoose'); 
 mongoose.Promise = global.Promise; 
 
 const {DATABASE_URL, PORT} = require('../config');
 const {Prompt} = require('../models'); 
+const jwtAuth = passport.authenticate('jwt', {session: false});
 
 //GET endpoint that returns all the users in the database
 router.get('/', (req, res) => {
@@ -46,9 +47,9 @@ router.get('/:id', (req,res) => {
     });
 
 //POST endpoint that creates writing prompts 
-router.post('/', (req, res) => {
+router.post('/', jwtAuth, (req, res) => {
     console.log(req.body);
-    const requiredFields=['title','email', 'scenario', 'category'];
+    const requiredFields=['title','scenario', 'category'];
     for(let i=0; i < requiredFields.length; i++){
         const field = requiredFields[i]; 
         if(!(field in req.body)){
@@ -61,7 +62,7 @@ router.post('/', (req, res) => {
     Prompt
         .create({
             title: req.body.title,
-            email: req.body.email,
+            user: req.user.id,
             scenario: req.body.scenario,
             category: req.body.category,
         })
