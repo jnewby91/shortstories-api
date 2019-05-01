@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
                 id: prompt.id, 
                 title: prompt.title,
                 scenario: prompt.scenario,
-                email: prompt.email, 
+                user: prompt.user, 
                 category: prompt.category
             }
             console.log(prompts);
@@ -58,6 +58,8 @@ router.post('/', jwtAuth, (req, res) => {
             return res.status(400).send(message);
         }
     }
+//find the user first 
+//then write to the array of prompts for that user
 
     Prompt
         .create({
@@ -75,6 +77,35 @@ router.post('/', jwtAuth, (req, res) => {
         });
     });
 });
+
+//PUT ENDPOINT FOR PROMPTS
+
+// router.put('/:id', jwtAuth, (req,res) => {
+//     const requireFields = ['title', 'scenario', 'category']; 
+//     for(i=0; i < requiredFields.length; i++){
+//         const field = requireFields[i]; 
+//         if (!(field in req.body)) {
+//             const message = `Missing\ ${field} \ in request body`; 
+//             console.err(message); 
+//             return res.status(400).send(message); 
+//         }
+
+//     const updated = {}; 
+//     const updatedFields = ['title', 'story', 'id', 'email']; 
+//     updatedFields.forEach(field => {
+//         if(field in req.body) {
+//             updated[field] = req.body[field];  
+//         }
+//     });
+
+//     return User.findByIdAndUpdate( req.params.id, {$set:updated}, {new: true})
+//     .then(user => {
+
+
+//     })
+        
+//     }
+// })
 
 
 //DELETE ENDPOINT FOR PROMPTS
