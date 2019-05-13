@@ -3,7 +3,6 @@ const router = express.Router();
 const passport = require('passport'); 
 const mongoose = require('mongoose'); 
 mongoose.Promise = global.Promise; 
-
 const {DATABASE_URL, PORT} = require('../config');
 const {Story} = require('../models'); 
 
@@ -32,6 +31,19 @@ router.get('/', (req, res) => {
         });
     });
 });
+
+//GET By ID for Stories
+router.get('/:id', (req,res) => {
+    Story
+    .findById(req.params.id)
+        .then(story => res.json(story.serialize()))
+        .catch(err => {
+            console.error(err); 
+            res.status(500).json({
+                error: 'something went wrong'
+            });
+        })
+    });
 
 //POST endpoint that creates writing prompts 
 router.post('/', jwtAuth, (req, res) => {
@@ -65,7 +77,8 @@ router.post('/', jwtAuth, (req, res) => {
 //PUT ENDPOINT FOR STORIES
 
 router.put('/:id', (req,res) => {
-    if(!(req.params.id && req.body.id && req.params.id  === req.body.id)) {
+    console.log(req.params.id,req.body.id, req.body); 
+    if(!(req.params.id && req.body.id && req.params.id  == req.body.id)) {
         res.status(400).json({
             error: 'Request path id and request body id values must match'
         });
@@ -88,6 +101,7 @@ router.put('/:id', (req,res) => {
         .then(story => {
             console.log('in here:', story);
             res.status(204).end()
+        })
         .catch(err => {
             console.error(err);
             res.status(500).json({
@@ -95,7 +109,7 @@ router.put('/:id', (req,res) => {
             })
         })
     })
-});
+;
 
 //DELETE ENDPOINT FOR STORIES
 router.delete('/:id', (req,res) => {
