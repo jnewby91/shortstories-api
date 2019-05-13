@@ -2,7 +2,7 @@
 require('dotenv').config();
 
 const express = require('express');
-const app = express();
+const app = express(); 
 const cors= require('cors'); 
 const morgan= require('morgan'); 
 
@@ -21,7 +21,7 @@ const {localStrategy, jwtStrategy} = require('./auth/strategies');
 
 mongoose.Promise = global.Promise;
 
-
+ 
 app.use(
     cors({
         origin: CLIENT_ORIGIN

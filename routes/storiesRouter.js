@@ -62,6 +62,41 @@ router.post('/', jwtAuth, (req, res) => {
     });
 });
 
+//PUT ENDPOINT FOR STORIES
+
+router.put('/:id', (req,res) => {
+    if(!(req.params.id && req.body.id && req.params.id  === req.body.id)) {
+        res.status(400).json({
+            error: 'Request path id and request body id values must match'
+        });
+    }
+
+    const updated = {}; 
+    const updatedFields = ['title', 'story']; 
+    updatedFields.forEach(field => {
+        if(field in req.body){
+            updated[field] = req.body[field]; 
+        } 
+    });
+    
+    return Story
+        .findByIdAndUpdate(req.params.id, {
+            $set: updated 
+        }, {
+            new: true
+        })
+        .then(story => {
+            console.log('in here:', story);
+            res.status(204).end()
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({
+                error: 'Something Went Wrong'
+            })
+        })
+    })
+});
+
 //DELETE ENDPOINT FOR STORIES
 router.delete('/:id', (req,res) => {
     Story
