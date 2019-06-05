@@ -12,11 +12,11 @@ const passport = require('passport');
 
 const {DATABASE_URL, PORT, CLIENT_ORIGIN} = require('./config.js');
 
-app.use(
-    cors({
-        origin: CLIENT_ORIGIN
-    })
-);
+// app.use(
+//     cors({
+//         origin: CLIENT_ORIGIN
+//     })
+// );
 
 app.use(morgan('tiny')); 
 app.use(bodyParser.json());
