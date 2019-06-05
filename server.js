@@ -46,10 +46,10 @@ passport.use(jwtStrategy);
 
 app.use(express.static('public')); 
 
-app.use('/api/prompts', promptsRouter);
-app.use('/api/stories', storiesRouter);
-app.use('/api/users', usersRouter);
-app.use('/api/auth', authRouter);
+app.use('api/prompts', promptsRouter);
+app.use('api/stories', storiesRouter);
+app.use('api/users', usersRouter);
+app.use('api/auth', authRouter);
 
 
 //  app.get('/api/*', (req, res) => {
