@@ -12,16 +12,6 @@ const passport = require('passport');
 
 const {DATABASE_URL, PORT, CLIENT_ORIGIN} = require('./config.js');
 
-const usersRouter = require('./routes/usersRouter');
-const storiesRouter = require('./routes/storiesRouter');
-const promptsRouter = require('./routes/promptsRouter');
-const {router: authRouter} = require('./auth/router'); 
-
-const {localStrategy, jwtStrategy} = require('./auth/strategies'); 
-
-mongoose.Promise = global.Promise;
-
- 
 app.use(
     cors({
         origin: CLIENT_ORIGIN
@@ -39,6 +29,15 @@ app.use(function (req, res, next) {
     }
     next(); 
 })
+
+const usersRouter = require('./routes/usersRouter');
+const storiesRouter = require('./routes/storiesRouter');
+const promptsRouter = require('./routes/promptsRouter');
+const {router: authRouter} = require('./auth/router'); 
+
+const {localStrategy, jwtStrategy} = require('./auth/strategies'); 
+
+mongoose.Promise = global.Promise;
 
 app.use(passport.initialize()); 
 
